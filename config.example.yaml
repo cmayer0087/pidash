@@ -1,0 +1,20 @@
+# key value pairs which are passed to the dashboard
+# here you can introduce variables which can be used in dashboard.qml
+dashboard:
+  key1: value1
+  key2: value2
+
+# Datasources and connections to display and control remote devices
+# There is always a "local" connector to display local informations
+connectors: []
+# Home Assistant connector
+#  - type: homeassistant
+#    name: hass
+# Host to Home Asistant
+#    host: shc
+# Port use for the webinterface (default 8123)
+#    port: 8123 (optional)
+# Access token used for authentication
+#    accessToken: XXXXX
+# Use a secured websocket connection
+#    useSSL: True (optional)
