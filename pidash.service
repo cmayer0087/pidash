@@ -1,0 +1,14 @@
+[Unit]
+Description=PiDash
+After=multi-user.target
+
+[Service]
+Environment=QT_QPA_PLATFORM=eglfs
+Environment=QT_QPA_PLATFORM_PLUGIN_PATH=/usr/local/qt5pi/plugins/platforms
+Environment=LD_LIBRARY_PATH=/usr/local/qt5pi/lib
+ExecStart=/usr/bin/python3 /home/pi/pidash/main.py
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

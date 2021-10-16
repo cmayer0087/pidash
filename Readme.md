@@ -6,11 +6,15 @@ With PiDash you can create a custom dashboard for your raspberry pi with a conne
 
 ### Installing
 
-* clone this repository to your raspberry pi
-* install requirements
-    ```
-    pip3 install -r requirements.txt
-    ```
+Clone this repository to the home directory of pi.
+```
+git clone https://github.com/cmayer0087/pidash.git /home/pi/pidash
+```
+
+Install all requirements.
+```
+pip3 install -r requirements.txt
+```
 
 ### Executing program
 Set some required env variables and start main.py
@@ -18,9 +22,10 @@ Set some required env variables and start main.py
 export QT_QPA_PLATFORM=eglfs
 export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/local/qt5pi/plugins/platforms
 export LD_LIBRARY_PATH=/usr/local/qt5pi/lib
-export
 python3 main.py
 ```
+
+You can also use the included pidash.service to auto start pidash
 
 ## Help
 
