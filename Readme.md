@@ -7,29 +7,19 @@ With PiDash you can create a custom dashboard for your raspberry pi with a conne
 ### Installing
 
 * clone this repository to your raspberry pi
-* (optionl) It is recommended to use an virtual python environment
-    ```
-    python3 -m venv .venv
-    ```
 * install requirements
     ```
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     ```
 
 ### Executing program
-Just run the main.py
+Set some required env variables and start main.py
 ```
-python main.py
-```
-
-if you use a venv then you activate the environment before
-```
-. ./.venv/bin/activate
-```
-
-Or use the python in the virtual environment directly
-```
-./.venv/bin/python main.py
+export QT_QPA_PLATFORM=eglfs
+export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/local/qt5pi/plugins/platforms
+export LD_LIBRARY_PATH=/usr/local/qt5pi/lib
+export
+python3 main.py
 ```
 
 ## Help
@@ -41,6 +31,13 @@ TODO: How to configure connectors an which ones are available
 ## License
 
 This project is licensed under the MIT License - see the [License.md](License.md) file for details
+
+## Troubleshooting
+### No text is displayed
+Make shure the fonts folder in /usr/local/qt5pi/lib/ exisits
+```
+ln -s /usr/share/fonts/truetype/dejavu /usr/local/qt5pi/lib/fonts
+```
 
 ## Acknowledgments
 

@@ -1,19 +1,17 @@
 import logging
 import os
-from PyQt5 import QtCore
 import yaml
 import locale
 
-from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtGui import QGuiApplication, QWindow
 from PyQt5.QtQml import QQmlApplicationEngine
-from PyQt5.QtQuick import QQuickWindow
 from PyQt5.QtCore import QUrl
 
-from .Connectors import HomeAssistantConnector, LocalConnector, createConnector
+from .Connectors import LocalConnector, createConnector
 
 class App(QGuiApplication):
 
-    mainWindow: QQuickWindow
+    mainWindow: QWindow
     basePath: str
 
     def __init__(self, args):
@@ -23,10 +21,10 @@ class App(QGuiApplication):
         # Use system defined locale
         locale.setlocale(locale.LC_ALL, '')
 
-        os.environ['QT_QUICK_CONTROLS_STYLE'] = 'Material'
+        os.environ["QT_QUICK_CONTROLS_STYLE"] = "Material"
 
         logging.basicConfig(level=logging.INFO)
-        logging.info('Starting PiDash')
+        logging.info("Starting PiDash")
 
     def load(self):
         self._loadConfig()
@@ -54,7 +52,7 @@ class App(QGuiApplication):
     def _loadConfig(self):
         configFile = self._resolveConfigFile("config.yaml", "config.example.yaml")
 
-        with open(configFile, 'r') as stream:
+        with open(configFile, "r") as stream:
             self.config = yaml.safe_load(stream)
 
     def _resolveConfigFile(self, relPath: str, altRelPath: str = ""):
