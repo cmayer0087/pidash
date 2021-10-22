@@ -119,15 +119,27 @@ class HomeAssistantConnector(QObject):
         self._logger = logging.getLogger("hass")
         self._msgId = 0
         self._requestCurrentStateMsgId = 0
+        self._autoReconnectIntervalInSecs = 5
 
         self._entities = {}
 
     def connect(self):
         proto = "wss" if self._useSSL else "ws"
         url = f"{proto}://{self._host}:{self._port}/api/websocket"
-        self._client = websocket.WebSocketApp(url, on_open=self._onOpen, on_close=self._onClose, on_message=self._onMessage, on_error=self._onError)
-        self._workerThread = Thread(target=self._client.run_forever, kwargs={'sslopt': {"cert_reqs":ssl.CERT_NONE}}, daemon=True)
+        self._client = websocket.WebSocketApp(url, on_open=self._onOpen, on_message=self._onMessage)
+        self._workerThread = Thread(target=self._keep_connected_forever, args=(True,), daemon=True)
         self._workerThread.start()
+
+    def _keep_connected_forever(self, ignoreBadSSLCerts):
+        while True:
+            try:
+                sslopt = {"cert_reqs":ssl.CERT_NONE} if ignoreBadSSLCerts else None
+                self._client.run_forever(sslopt=sslopt)
+                self._logger.info(f"Connection closed (reconnect in {self._autoReconnectIntervalInSecs} seconds)")
+            except Exception as ex:
+                self._logger.Info(f"Connection closed (reconnect in {self._autoReconnectIntervalInSecs} seconds): " + str(ex))
+
+            time.sleep(self._autoReconnectIntervalInSecs)
 
     def _onOpen(self, ws):
         self._logger.info("Connected to homeassistant")
@@ -149,12 +161,6 @@ class HomeAssistantConnector(QObject):
 
         except Exception as ex:
             self._logger.exception("error while processing message: " + str(ex))
-
-    def _onError(self, ws, error):
-        self._logger.error(error)
-
-    def _onClose(self, ws, statusCode, message):
-        self._logger.info("Connection closed")
 
     def _sendAuth(self):
         self._logger.info("Sending Authentication")
