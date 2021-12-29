@@ -1,6 +1,12 @@
-# PiDash
+# piQtDash
 
-With PiDash you can create a custom dashboard for your raspberry pi with a connected display.
+A highly customizable dashboard to show on TFT displays.
+This project can be used to display your very own dashboard.
+The dasboard is fully customizable with QML (QT5) which is loaded on runtime.
+Connectors provide data to display or functions to control other stuff like home assistant.
+
+Disclaimer: I use this to display and control room temperature and humidity on an shpi device.
+My own dashboard.yaml is not included, because its highly customized to my own needs.
 
 ## Getting Started
 
@@ -8,7 +14,7 @@ With PiDash you can create a custom dashboard for your raspberry pi with a conne
 
 Clone this repository to the home directory of pi.
 ```
-git clone https://github.com/cmayer0087/pidash.git /home/pi/pidash
+git clone https://github.com/cmayer0087/piQtDash.git /home/pi/piQtDash
 ```
 
 Install all requirements.
@@ -16,6 +22,10 @@ Install all requirements.
 pip3 install -r requirements.txt
 ```
 
+and follow this guide 
+```
+https://wiki.qt.io/RaspberryPi2EGLFS
+```
 ### Executing program
 Set some required env variables and start main.py
 ```
@@ -25,7 +35,7 @@ export LD_LIBRARY_PATH=/usr/local/qt5pi/lib
 python3 main.py
 ```
 
-You can also use the included pidash.service to auto start pidash
+You can also use the included piQtDash.service to auto start piQtDash
 
 ## Help
 
