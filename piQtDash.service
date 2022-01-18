@@ -1,12 +1,12 @@
 [Unit]
-Description=PiDash
+Description=piQtDash
 After=multi-user.target
 
 [Service]
 Environment=QT_QPA_PLATFORM=eglfs
 Environment=QT_QPA_PLATFORM_PLUGIN_PATH=/usr/local/qt5pi/plugins/platforms
 Environment=LD_LIBRARY_PATH=/usr/local/qt5pi/lib
-ExecStart=/usr/bin/python3 /home/pi/pidash/main.py
+ExecStart=/usr/bin/python3 /home/pi/piQtDash/main.py
 Restart=always
 User=pi
 
