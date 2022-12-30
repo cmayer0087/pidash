@@ -7,7 +7,7 @@ from PyQt5.QtGui import QGuiApplication, QWindow
 from PyQt5.QtQml import QQmlApplicationEngine
 from PyQt5.QtCore import QUrl
 
-from .Connectors import LocalConnector, createConnector
+from core.connectors import LocalConnector, createConnector
 
 class App(QGuiApplication):
 
