@@ -118,7 +118,6 @@ class HomeAssistantConnector(QObject):
         self._client.send(data)
         self._logger.debug("Message sent: " + data)
 
-    @pyqtSlot(int, str, str, str)
     def callService(self, domain, service, data):
         self._send({
             "id": self._getNextMsgId(),
@@ -127,6 +126,10 @@ class HomeAssistantConnector(QObject):
             "service": service,
             "service_data": data
         })
+
+    def publishMQTT(self, topic, payload):
+        data = { "topic": topic, "payload": json.dumps(payload)}
+        self.callService("mqtt","publish", data)
 
     def _getNextMsgId(self):
         self._msgId += 1
@@ -141,6 +144,25 @@ class HomeAssistantConnector(QObject):
     def setHumidifierPresetMode(self, entityId, presetMode):
         data = { "entity_id": entityId, "mode": presetMode }
         self.callService("humidifier", "set_mode", data)
+
+    @pyqtSlot(str)
+    def startVacuum(self, entityId):
+        data = { "entity_id": entityId }
+        self.callService("vacuum", "start", data)
+
+    @pyqtSlot(str)
+    def stopVacuum(self, entityId):
+        data = { "entity_id": entityId }
+        self.callService("vacuum", "stop", data)
+
+    @pyqtSlot(str, list, int)
+    def startVaccumSegmentsClean(self, topicPrefix, segmentIds, iterations):
+        payload = {
+            "segment_ids": segmentIds,
+            "iteration": iterations,
+            "customOrder": True
+        }
+        self.publishMQTT(topicPrefix + "/MapSegmentationCapability/clean/set", payload)
 
 class HomeAssistantEntityState(QObject):
 

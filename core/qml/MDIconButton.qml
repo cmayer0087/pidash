@@ -7,6 +7,7 @@ Item {
     property int size: 24
     property string icon
     property color color: Material.foreground
+    property bool enabled: true
 
     signal clicked()
 
@@ -15,6 +16,7 @@ Item {
     height: size
 
     RoundButton {
+        enabled: root.enabled
         width: root.size
         height: root.size
         

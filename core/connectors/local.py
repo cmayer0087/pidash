@@ -31,15 +31,18 @@ class LocalConnector(QObject):
 
     def _updateLoop(self):
         while True:
-            self.dateTime = QDateTime.currentDateTime()
-            self.cpuUsage = psutil.cpu_percent()
-            self.hostname = socket.gethostname()
+            try:
+                self.dateTime = QDateTime.currentDateTime()
+                self.cpuUsage = psutil.cpu_percent()
+                self.hostname = socket.gethostname()
 
-            memInfo = psutil.virtual_memory()
-            self.memUsage = memInfo.percent
-            self.memTotal = memInfo.total
-            self.memFree = memInfo.available
-            
+                memInfo = psutil.virtual_memory()
+                self.memUsage = memInfo.percent
+                self.memTotal = memInfo.total
+                self.memFree = memInfo.available
+            except RuntimeError:
+                pass
+
             time.sleep(0.5)
 
     @pyqtProperty(QDateTime, notify=dateTimeChanged)
