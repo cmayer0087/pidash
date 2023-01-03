@@ -4,7 +4,7 @@ import "MDIconGlyphs.js" as MaterialGlyphs
 
 Item {
     property int size: 24
-    property string icon
+    property string iconName
     property color color: Material.foreground
 
     width: size
@@ -18,7 +18,7 @@ Item {
         font.family: materialFont.name
         font.pixelSize: parent.height
 
-        text: MaterialGlyphs.glyphs[parent.icon]
+        text: MaterialGlyphs.glyphs[parent.iconName]
     }
 
     FontLoader {
@@ -26,5 +26,5 @@ Item {
         source: "./materialdesignicons-webfont.ttf"
     }
 
-    Component.onCompleted: console.assert(MaterialGlyphs.glyphs[icon], "Icon with name '" + icon + "' not found")
+    Component.onCompleted: console.assert(MaterialGlyphs.glyphs[iconName], "Icon with name '" + iconName + "' not found")
 }
